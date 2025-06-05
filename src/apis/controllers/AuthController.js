@@ -85,7 +85,12 @@ class AuthController {
     // [POST] /auth/logout
     async logout(req, res, next) {
         try {
-            res.clearCookie('token');
+            res.clearCookie('token', {
+              httpOnly: true,
+              secure: true,
+              sameSite: "None",
+              path: "/",
+            });
             return res.status(200).json({ message: 'Đăng xuất thành công' });
         } catch (error) {
             return res.status(500).json({ message: 'Có lôĩ xảy ra. Vui lòng thử lại sao!!!' });
